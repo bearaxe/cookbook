@@ -1,0 +1,14 @@
+<h2>Recipes</h2>
+<div class="row">
+    <div class="col-md-5">
+        <app-recipes-list (bubblingToggle)="selectedRecipe = $event"></app-recipes-list>
+    </div>
+    <div class="col-md-7">
+        <app-recipes-detail
+            *ngIf="selectedRecipe; else defaultDet"
+            [recipe]="selectedRecipe"></app-recipes-detail>
+            <ng-template #defaultDet>
+                <p>Select a recipe</p>
+            </ng-template>
+    </div>
+</div>

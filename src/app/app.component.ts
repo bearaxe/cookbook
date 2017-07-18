@@ -6,5 +6,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'app';
+  showRecipe:boolean = true;
+
+  updateView(data){
+      this.showRecipe = data;
+  }
 }
