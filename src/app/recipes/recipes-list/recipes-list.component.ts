@@ -1,5 +1,6 @@
-import { Component, OnInit, EventEmitter, Output, Input} from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { Recipe } from '../recipe.model';
+import { RecipeService } from '../recipe.service';
 
 @Component({
   selector: 'app-recipes-list',
@@ -7,22 +8,12 @@ import { Recipe } from '../recipe.model';
   styleUrls: ['./recipes-list.component.css']
 })
 export class RecipesListComponent implements OnInit {
-    // @Output() transmit= new EventEmitter<Recipe>();
-    // @Input() detailToggle: Recipe;
-    @Output() bubblingToggle= new EventEmitter<Recipe>();
-    recipes:Recipe[] = [
-        new Recipe('cheezeburger', 'is tastey', 'https://upload.wikimedia.org/wikipedia/commons/6/65/Libum_Sweet_Cheesecake_ingredients_%26_recipe_%288411812870%29.jpg'),
-        new Recipe('cheezeburger2', '2is tastey', 'https://upload.wikimedia.org/wikipedia/commons/6/65/Libum_Sweet_Cheesecake_ingredients_%26_recipe_%288411812870%29.jpg')
-    ];
+  recipes: Recipe[];
 
-  constructor() { }
-
-  bubbleToggle(recipe: Recipe){
-    //   console.log("senddddding data up:", recipe)
-      this.bubblingToggle.emit(recipe);
-  }
+  constructor(private recipeService: RecipeService) { }
 
   ngOnInit() {
+      this.recipes = this.recipeService.getRecipes();
   }
 
 }
