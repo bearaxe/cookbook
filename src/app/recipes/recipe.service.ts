@@ -40,6 +40,10 @@ export class RecipeService{
       return this.recipes[id - 1];
     }
 
+    newRecipeId(){
+      return this.recipes.length +1;
+    }
+
     setRecipes(updatedList:Recipe[]) {
       // this.recipes = updatedList;
       // console.log('pretend this worked')
