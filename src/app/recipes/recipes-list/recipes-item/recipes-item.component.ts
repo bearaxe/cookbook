@@ -10,13 +10,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class RecipesItemComponent implements OnInit {
   @Input() recipe:Recipe;
-  constructor() { }
 
   ngOnInit() {
   }
-
-  // selectRecipe(){
-  //     this.recipeService.recipeSelected.emit(this.recipe);
-  // }
 
 }
