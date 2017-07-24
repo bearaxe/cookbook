@@ -1,8 +1,8 @@
-import { EventEmitter } from '@angular/core';
 import { Ingredient } from '../shared/ingredient.model';
+import { Subject } from 'rxjs/Subject';
 
 export class ShoppingListService{
-    updatedIngredientList = new EventEmitter<Ingredient[]>();
+    updatedIngredientList = new Subject<Ingredient[]>();
     private ingredients: Ingredient[] = [
         new Ingredient('Apples', 5),
         new Ingredient('Tomates', 10)
@@ -13,9 +13,9 @@ export class ShoppingListService{
     }
 
     addToList(data: Ingredient){
-        console.log("datapassed:", data)
+        console.log("datapassed:", data);
         this.ingredients.push(data);
-        this.updatedIngredientList.emit(this.ingredients.slice());
+        this.updatedIngredientList.next(this.ingredients.slice());
     }
 
     addListToList(ingredientList: Ingredient[]){
@@ -23,7 +23,7 @@ export class ShoppingListService{
         //I'm changing what's used away from what I originally put because you should use this more often
         this.ingredients.push(...ingredientList);
         // this.ingredients = this.ingredients.concat(ingredientList);
-        this.updatedIngredientList.emit(this.ingredients.slice());
+        this.updatedIngredientList.next(this.ingredients.slice());
     }
 
 }

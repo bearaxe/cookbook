@@ -11,7 +11,7 @@ import { RecipeService } from '../recipe.service';
 export class RecipesEditComponent implements OnInit {
   recipe: Recipe;
   id: number = 0;
-  editMode: boolean = false;
+  editMode = false;
 
   constructor(private route: ActivatedRoute,
               private recipeService: RecipeService) { }
