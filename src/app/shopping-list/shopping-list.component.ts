@@ -24,6 +24,10 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
       );
   }
 
+  onEditItem(index: number){
+    this.slService.startedEditing.next(index);
+  }
+
   // you need to unsubscribe manually in this case because angular doesn't handle subject leaving events
   ngOnDestroy(){
     this.subscription.unsubscribe();
