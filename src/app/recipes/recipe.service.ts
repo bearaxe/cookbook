@@ -2,9 +2,11 @@ import { Injectable } from '@angular/core';
 import { Recipe } from './recipe.model';
 import { Ingredient } from '../shared/ingredient.model';
 import { ShoppingListService } from '../shopping-list/shopping-list.service';
+import { Subject } from 'rxjs/Subject';
 
 @Injectable()
 export class RecipeService{
+    updatedRecipeList = new Subject<Recipe[]>();
 
     private recipes:Recipe[] = [
         new Recipe(
@@ -50,6 +52,20 @@ export class RecipeService{
 
     saveRecipe(updatedRecipe:Recipe){
       console.log('pretend this worked')
+    }
+
+    updateRecipeInList(updatedRecipe: Recipe){
+        this.setRecipe(this.getRecipe(updatedRecipe.id), updatedRecipe);
+    }
+
+    setRecipe(old, newer){
+      old = newer;
+    }
+
+    addRecipeToList(newRecipe: Recipe){
+      this.recipes.push(newRecipe);
+      console.log('In case I need to impliment a subscription, this is the new array value: ', this.recipes);
+      this.updatedRecipeList.next(this.recipes);
     }
 
     sendIngredientsToShoppingList(list:Ingredient[]){

@@ -1,3 +1,110 @@
-<p>
-  recipes-edit works! [recipe.id: {{ recipe.id }}]
-</p>
+<!--<p>-->
+<!--recipes-edit works! [recipe.id: {{ recipe.id }}]-->
+<!--</p>-->
+<hr>
+<div class="row">
+  <div class="col-xs-12">
+    <form [formGroup]="recipeForm">
+      <div class="row">
+        <div class="row">
+          <div class="col-xs-12">
+            <button (click)="save()" class="btn btn-success">Save</button>
+            <button (click)="cancel()" class="btn btn-danger">Cancel</button>
+            <span *ngIf="errorsOnForm">Something's wrong. Please fix the form.</span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input type="text"
+                     id="name"
+                     class="form-control"
+                     formControlName="name"
+              >
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="form-group">
+              <label for="imagePath">Image URL</label>
+              <input type="text"
+                     id="imagePath"
+                     class="form-control"
+                     formControlName="imagePath"
+                     #ip
+              >
+              <!-- Test values: -->
+              <!-- http://cdn2-www.dogtime.com/assets/uploads/gallery/30-impossibly-cute-puppies/impossibly-cute-puppy-8.jpg -->
+              <!-- /assets/user-avatar.png -->
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="form-group">
+              <img src="{{ ip.value }}"
+                   class="img-responsive"
+                   *ngIf="ip.value !== null">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="form-group">
+              <label for="description">Description</label>
+              <textarea type="text"
+                        id="description"
+                        class="form-control"
+                        rows="6"
+                        formControlName="description"
+              >
+              </textarea>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <label for="ingredients">Ingredients</label>
+            <button
+              class="btn btn-success pull-right"
+              (click)="onAddIngredient()">Add an Ingredient</button>
+            <hr>
+          </div>
+
+          <div class="col-xs-12">
+            <div class="form-group"
+                 formArrayName="ingredients">
+              <div class="row"
+                   *ngFor="let ingredient of recipeForm.get('ingredients').controls; let i = index"
+                   style="margin-bottom: 15px;">
+                <div formGroupName="{{ i }}" >
+                  <div class="col-xs-8">
+                    <input type="text"
+                           id="ingredients"
+                           class="form-control"
+                           formControlName="name"
+                    >
+                  </div>
+                  <div class="col-xs-2">
+                    <input type="number"
+                           id="amount"
+                           class="form-control"
+                           formControlName="amount"
+                    >
+                  </div>
+                  <div class="col-xs-2">
+                    <button
+                      class="btn btn-danger"
+                      (click)="onDeleteIngredient(i)">X</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
