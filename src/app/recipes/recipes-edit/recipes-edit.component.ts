@@ -62,7 +62,7 @@ export class RecipesEditComponent implements OnInit {
     return new FormGroup({
       'name': new FormControl(fields[0], Validators.required),
       'imagePath': new FormControl(fields[1], Validators.required),
-      'description': new FormControl(fields[2]),
+      'description': new FormControl(fields[2], Validators.required),
       'ingredients': this.formatIngredients(fields[3])
     });
   }
@@ -73,12 +73,19 @@ export class RecipesEditComponent implements OnInit {
     arr.map(
       (each) =>
         (<FormArray>newList).push(
-          new FormGroup(
-            { 'name': new FormControl(each.name),
-              'amount': new FormControl(each.amount)
-            }))
+          this.createIngredientGroup([each.name, each.amount]))
     );
     return newList;
+  }
+
+  createIngredientGroup(data: [string, number]){
+    return new FormGroup({
+      'name': new FormControl(data[0], Validators.required),
+      'amount': new FormControl(data[1], [
+        Validators.required,
+        Validators.pattern(/^[1-9]+[0-9]*$/)
+      ])
+    });
   }
 
   // Form should not clear when in editMode, but should repopulate with the initial values
@@ -115,13 +122,10 @@ export class RecipesEditComponent implements OnInit {
     return (this.recipeForm.value[someProp] ? this.recipeForm.value[someProp] : this.recipe[someProp]);
   }
 
-  // I'm torn. I hate that this is away from the validation consolidation function, but it's trivial (both required)
+  // newGrouping started getting complex so I threw it up with the other validator consolidator
   onAddIngredient(){
     console.log('Caught Ing Add Req');
-    const newGroup = new FormGroup({
-      'name': new FormControl(null, Validators.required),
-      'amount': new FormControl(null, Validators.required)
-    });
+    const newGroup = this.createIngredientGroup([null, null]);
     (<FormArray>this.recipeForm.get('ingredients')).push(newGroup);
     console.log('your ingredients are now:', this.recipeForm.get('ingredients'));
   }
