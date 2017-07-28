@@ -16,6 +16,10 @@ export class RecipesEditComponent implements OnInit {
   editMode = false;
   recipeForm: FormGroup;
   errorsOnForm = false;
+  fields = {'name': 'required',
+            'imagePath': 'required',
+            'description': false,
+            'ingredients': 'required'};
 
   constructor(private route: ActivatedRoute,
               private recipeService: RecipeService) { }
@@ -37,33 +41,65 @@ export class RecipesEditComponent implements OnInit {
     console.log('this.id:', this.id);
   }
 
+  // The way this is created is making my validation inconsistent, and I don't like that, no sir, not one bit. >:(
   loadRecipe(){
-    this.recipeForm = new FormGroup({
-      'name': new FormControl(this.recipe.name, Validators.required),
-      'imagePath': new FormControl(this.recipe.imagePath),
-      'description': new FormControl(this.recipe.description),
-      'ingredients': this.formatIngredients(this.recipe.ingredients)
-    });
+    // this.recipeForm = new FormGroup({
+    //   'name': new FormControl(this.recipe.name, Validators.required),
+    //   'imagePath': new FormControl(this.recipe.imagePath),
+    //   'description': new FormControl(this.recipe.description),
+    //   'ingredients': this.formatIngredients(this.recipe.ingredients)
+    // });
+    this.recipeForm = this.createFormFields([
+                        this.recipe.name,
+                        this.recipe.imagePath,
+                        this.recipe.description,
+                        this.recipe.ingredients
+                      ]);
   }
 
   formatIngredients(arr: Ingredient[]){
     console.log('parings arr passed:', arr);
     const newList: FormArray = new FormArray([]);
-    arr.map((each) => (<FormArray>newList).push(new FormGroup({'name': new FormControl(each.name), 'amount': new FormControl(each.amount)})));
+    arr.map(
+      (each) =>
+        (<FormArray>newList).push(
+          new FormGroup(
+            { 'name': new FormControl(each.name),
+              'amount': new FormControl(each.amount)
+            }))
+    );
     return newList;
   }
 
   startNewRecipe(){
-    this.recipeForm = new FormGroup({
-      'name': new FormControl(null),
-      'imagePath': new FormControl(null),
-      'description': new FormControl(null),
-      'ingredients': new FormArray([
-        new FormGroup(
-          {'name': new FormControl(null),
-            'amount': new FormControl(null)
-          }
-        )])
+    // this.recipeForm = new FormGroup({
+    //   'name': new FormControl(null),
+    //   'imagePath': new FormControl(null),
+    //   'description': new FormControl(null),
+    //   'ingredients': new FormArray([
+    //     new FormGroup(
+    //       {'name': new FormControl(null),
+    //         'amount': new FormControl(null)
+    //       }
+    //     )])
+    // });
+    this.recipeForm = this.createFormFields([
+                        null,
+                        null,
+                        null,
+                        null
+                      ]);
+  }
+
+  // using this to consolidate Validators etc (mostly because i WILL forget if it's not all in one place)
+  // This returns the formGroup to preserve the code plot (may change later)
+  // I'm using a tuple so TS will yell at anyone trying to put weird stuff in this function
+  createFormFields(value: [any, any, any, any]){
+    return new FormGroup({
+      'name': new FormControl(value[0], Validators.required),
+      'imagePath': new FormControl(value[1]),
+      'description': new FormControl(value[2]),
+      'ingredients': this.formatIngredients(value[3])
     });
   }
 
