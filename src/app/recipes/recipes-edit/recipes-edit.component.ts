@@ -3,6 +3,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { Recipe } from '../recipe.model';
 import { RecipeService } from '../recipe.service';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Ingredient } from '../../shared/ingredient.model';
 
 @Component({
   selector: 'app-recipes-edit',
@@ -21,30 +22,45 @@ export class RecipesEditComponent implements OnInit {
               private recipeService: RecipeService) { }
 
   ngOnInit() {
-    this.recipeForm = new FormGroup({
-      'name': new FormControl(null, Validators.required),
-      'imagePath': new FormControl(null),
-      'description': new FormControl(null),
-      'ingredients': new FormArray([
-        new FormGroup({
-          'name': new FormControl(null),
-          'amount': new FormControl(null)
-        })
-      ])
-    });
-    console.log(this.recipeForm.get('ingredients'));
+    // console.log(this.recipeForm.get('ingredients'));
 
     this.route.params.subscribe(
       (params: Params) => {
         this.editMode = params['id'] != null;
         if(this.editMode){
           this.id = +params['id'];
-          this.recipe = this.recipeService.getRecipe(this.id);
+          this.showRecipe(this.recipeService.getRecipe(this.id));
         } else {
-          this.startNewRecipe();
+          this.showRecipe(new Recipe('', '', '', [new Ingredient(null, null)]));
+          // this.startNewRecipe();
         }
       }
     );
+    console.log('this.id:', this.id);
+  }
+
+  // Maybe this is a little too clever to be trusted, but it sure is cool (and easy to fix, but that comes later)
+  showRecipe(bit: Recipe){
+    this.recipe = bit;
+    this.recipeForm = new FormGroup({
+      'name': new FormControl((this.editMode ? this.recipe.name : null), Validators.required),
+      'imagePath': new FormControl((this.editMode ? this.recipe.imagePath : null)),
+      'description': new FormControl((this.editMode ? this.recipe.description : null)),
+      'ingredients': (this.editMode ? this.formatIngredients(this.recipe.ingredients)
+                                    : new FormArray([
+                                        new FormGroup(
+                                          {'name': new FormControl(null),
+                                           'amount': new FormControl(null)
+                                          }
+                                        )]))
+    });
+  }
+
+  formatIngredients(arr: Ingredient[]){
+    console.log('parings arr passed:', arr);
+    const newList: FormArray = new FormArray([]);
+    arr.map((each) => (<FormArray>newList).push(new FormGroup({'name': new FormControl(each.name), 'amount': new FormControl(each.amount)})));
+    return newList;
   }
 
   startNewRecipe(){
