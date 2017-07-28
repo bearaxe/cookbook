@@ -8,7 +8,6 @@ export class RecipeService{
 
     private recipes:Recipe[] = [
         new Recipe(
-            1,
             'Rock Soup',
             'can you smell what the rock\'s cookin?',
             'https://upload.wikimedia.org/wikipedia/commons/6/65/Libum_Sweet_Cheesecake_ingredients_%26_recipe_%288411812870%29.jpg',
@@ -18,7 +17,6 @@ export class RecipeService{
             ]
         ),
         new Recipe(
-            2,
             'cheezeburger',
             'i can haz, yes?',
             'https://upload.wikimedia.org/wikipedia/commons/6/65/Libum_Sweet_Cheesecake_ingredients_%26_recipe_%288411812870%29.jpg',
@@ -36,7 +34,7 @@ export class RecipeService{
     }
 
     getRecipe(id: number){
-      return this.recipes[id - 1];
+      return this.recipes[id];
     }
 
     newRecipeId(){

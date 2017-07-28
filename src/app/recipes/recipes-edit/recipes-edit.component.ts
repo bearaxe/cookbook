@@ -10,7 +10,7 @@ import { RecipeService } from '../recipe.service';
 })
 export class RecipesEditComponent implements OnInit {
   recipe: Recipe;
-  id: number = 0;
+  id: number;
   editMode = false;
 
   constructor(private route: ActivatedRoute,
@@ -31,8 +31,7 @@ export class RecipesEditComponent implements OnInit {
   }
 
   startNewRecipe(){
-    this.id = this.recipeService.newRecipeId();
-    this.recipe = new Recipe(this.id, '', '', '', []);
+    this.recipe = new Recipe('', '', '', []);
   }
 
 }
