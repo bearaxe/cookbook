@@ -39,35 +39,19 @@ export class RecipeService{
       return this.recipes[id];
     }
 
-    newRecipeId(){
-      return this.recipes.length +1;
-    }
-
-    setRecipes(updatedList:Recipe[]) {
-      // this.recipes = updatedList;
-      // console.log('pretend this worked')
-    }
-
-    saveRecipe(updatedRecipe:Recipe){
-      console.log('pretend this worked')
-    }
-
     updateRecipeInList(index: number, updatedRecipe: Recipe){
-        this.setRecipe(this.getRecipe(index), updatedRecipe);
-    }
-
-    setRecipe(old, newer){
-      old = newer;
+        let tochange = this.getRecipe(index);
+        tochange = updatedRecipe;
     }
 
     addRecipeToList(newRecipe: Recipe){
       this.recipes.push(newRecipe);
-      console.log('In case I need to impliment a subscription, this is the new array value: ', this.recipes);
+      console.log('In case I need to implement a subscription, this is the new array value: ', this.recipes);
       this.updatedRecipeList.next(this.recipes);
     }
 
     sendIngredientsToShoppingList(list:Ingredient[]){
         this.slService.addListToList(list);
-        alert("Added to shopping list!");
+        alert('Added to shopping list!');
     }
 }
