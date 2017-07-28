@@ -95,6 +95,7 @@ export class RecipesEditComponent implements OnInit {
     console.log('Recipe reset run');
   }
 
+  // this can almost certainly be split up into a save and update function. Then you can avoid that tricky nonsense.
   save(){
     if(this.recipeForm.invalid){
       console.log('Found an error, updating view');
@@ -103,15 +104,21 @@ export class RecipesEditComponent implements OnInit {
     }
 
     this.errorsOnForm = false;
+    // this is a magic block. I have no idea how or why this works.
     this.recipe.name = this.setIfExists('name');
     this.recipe.imagePath = this.setIfExists('imagePath');
     this.recipe.description = this.setIfExists('description');
     this.recipe.ingredients = this.setIfExists('ingredients');
+    // This should do the same thing, but it doesn't work at all
+    // this.recipe = this.recipeForm.value;
     console.log('Recipe Data to push:', this.recipe);
     console.log('Data Raw:', this.recipeForm);
     if(!this.editMode) {
+      console.log('heck it, i think it might work just fine lol')
       this.recipeService.addRecipeToList(this.recipe);
     }else{
+      console.log('pretest for refactor!!!!\nthis.recipe:', this.recipe, '\nthis.recipeForm:', (<Recipe>this.recipeForm.value));
+      console.log('Changes are in effect');
       this.recipeService.updateRecipeInList(this.id, this.recipe);
     }
 
