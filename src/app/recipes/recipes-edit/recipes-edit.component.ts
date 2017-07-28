@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Recipe } from '../recipe.model';
 import { RecipeService } from '../recipe.service';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
@@ -17,7 +17,8 @@ export class RecipesEditComponent implements OnInit {
   recipeForm: FormGroup;
   errorsOnForm = false;
 
-  constructor(private route: ActivatedRoute,
+  constructor(private router: Router,
+              private route: ActivatedRoute,
               private recipeService: RecipeService) { }
 
   ngOnInit() {
@@ -88,11 +89,9 @@ export class RecipesEditComponent implements OnInit {
     });
   }
 
-  // Form should not clear when in editMode, but should repopulate with the initial values
   cancel(){
-    this.recipeForm.reset(); // This is behavior is wrong.
-    this.errorsOnForm = false;
-    console.log('Recipe reset run');
+    this.recipeForm.reset();
+    this.router.navigate(['../'], {relativeTo: this.route});
   }
 
   // this can almost certainly be split up into a save and update function. Then you can avoid that tricky nonsense.
@@ -111,17 +110,14 @@ export class RecipesEditComponent implements OnInit {
     this.recipe.ingredients = this.setIfExists('ingredients');
     // This should do the same thing, but it doesn't work at all
     // this.recipe = this.recipeForm.value;
-    console.log('Recipe Data to push:', this.recipe);
-    console.log('Data Raw:', this.recipeForm);
+    // console.log('Recipe Data to push:', this.recipe);
+    // console.log('Data Raw:', this.recipeForm);
     if(!this.editMode) {
-      console.log('heck it, i think it might work just fine lol')
       this.recipeService.addRecipeToList(this.recipe);
     }else{
-      console.log('pretest for refactor!!!!\nthis.recipe:', this.recipe, '\nthis.recipeForm:', (<Recipe>this.recipeForm.value));
-      console.log('Changes are in effect');
       this.recipeService.updateRecipeInList(this.id, this.recipe);
     }
-
+    this.router.navigate(['../'], {relativeTo: this.route});
   }
 
   // this is tricky, but it doesn't seem to be adding complexity to understand if named correctly

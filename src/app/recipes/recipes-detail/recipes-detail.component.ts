@@ -10,7 +10,7 @@ import { ActivatedRoute, Params, Route, Router } from '@angular/router';
 })
 export class RecipesDetailComponent implements OnInit {
   recipe: Recipe;
-  id: number = 0;
+  id: number = -1;
 
   constructor(private recipeService:RecipeService,
               private router: Router,
@@ -26,12 +26,17 @@ export class RecipesDetailComponent implements OnInit {
   }
 
   sendToShoppingList(list){
-      this.recipeService.sendIngredientsToShoppingList(list);
+    this.recipeService.sendIngredientsToShoppingList(list);
   }
 
   openEdit(){
     // [routerLink]="['/recipes', recipe.id, 'edit']"
     this.router.navigate( ['edit'], {relativeTo: this.route});
+  }
+
+  deleteRecipe(){
+    this.recipeService.deleteRecipe(this.id);
+    this.router.navigate( ['recipes'], {relativeTo: this.route});
   }
 
 }

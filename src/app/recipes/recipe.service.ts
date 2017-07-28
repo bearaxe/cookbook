@@ -58,4 +58,9 @@ export class RecipeService{
         this.slService.addListToList(list);
         alert('Added to shopping list!');
     }
+
+    deleteRecipe(index){
+      this.recipes.splice(index, 1);
+      this.updatedRecipeList.next(this.recipes);
+    }
 }
