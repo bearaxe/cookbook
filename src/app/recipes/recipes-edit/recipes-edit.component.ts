@@ -11,7 +11,7 @@ import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 })
 export class RecipesEditComponent implements OnInit {
   recipe: Recipe;
-  id: number = 0;
+  id: number;
   editMode = false;
   recipeForm: FormGroup;
   // imagePreview: string = '/assets/user-avatar.png';
@@ -48,8 +48,7 @@ export class RecipesEditComponent implements OnInit {
   }
 
   startNewRecipe(){
-    this.id = this.recipeService.newRecipeId();
-    this.recipe = new Recipe(this.id, '', '', '', []);
+    this.recipe = new Recipe('', '', '', []);
   }
 
   cancel(){
@@ -74,10 +73,10 @@ export class RecipesEditComponent implements OnInit {
     console.log('Data Raw:', this.recipeForm);
     if(!this.editMode) {
       // master overwrite for id. This prevents shallow copy entries for new entries
-      this.recipe.id = this.recipeService.newRecipeId();
+      // this.recipe.id = this.recipeService.newRecipeId();
       this.recipeService.addRecipeToList(this.recipe);
     }else{
-      this.recipeService.updateRecipeInList(this.recipe);
+      this.recipeService.updateRecipeInList(this.id, this.recipe);
     }
 
   }
