@@ -15,44 +15,34 @@ export class RecipesEditComponent implements OnInit {
   id: number;
   editMode = false;
   recipeForm: FormGroup;
-  // imagePreview: string = '/assets/user-avatar.png';
   errorsOnForm = false;
 
   constructor(private route: ActivatedRoute,
               private recipeService: RecipeService) { }
 
   ngOnInit() {
-    // console.log(this.recipeForm.get('ingredients'));
-
     this.route.params.subscribe(
       (params: Params) => {
         this.editMode = params['id'] != null;
         if(this.editMode){
           this.id = +params['id'];
-          this.showRecipe(this.recipeService.getRecipe(this.id));
+          this.recipe = this.recipeService.getRecipe(this.id);
+          this.loadRecipe();
         } else {
-          this.showRecipe(new Recipe('', '', '', [new Ingredient(null, null)]));
-          // this.startNewRecipe();
+          this.recipe = new Recipe('', '', '', [new Ingredient(null, null)]);
+          this.startNewRecipe();
         }
       }
     );
     console.log('this.id:', this.id);
   }
 
-  // Maybe this is a little too clever to be trusted, but it sure is cool (and easy to fix, but that comes later)
-  showRecipe(bit: Recipe){
-    this.recipe = bit;
+  loadRecipe(){
     this.recipeForm = new FormGroup({
-      'name': new FormControl((this.editMode ? this.recipe.name : null), Validators.required),
-      'imagePath': new FormControl((this.editMode ? this.recipe.imagePath : null)),
-      'description': new FormControl((this.editMode ? this.recipe.description : null)),
-      'ingredients': (this.editMode ? this.formatIngredients(this.recipe.ingredients)
-                                    : new FormArray([
-                                        new FormGroup(
-                                          {'name': new FormControl(null),
-                                           'amount': new FormControl(null)
-                                          }
-                                        )]))
+      'name': new FormControl(this.recipe.name, Validators.required),
+      'imagePath': new FormControl(this.recipe.imagePath),
+      'description': new FormControl(this.recipe.description),
+      'ingredients': this.formatIngredients(this.recipe.ingredients)
     });
   }
 
@@ -64,7 +54,17 @@ export class RecipesEditComponent implements OnInit {
   }
 
   startNewRecipe(){
-    this.recipe = new Recipe('', '', '', []);
+    this.recipeForm = new FormGroup({
+      'name': new FormControl(null),
+      'imagePath': new FormControl(null),
+      'description': new FormControl(null),
+      'ingredients': new FormArray([
+        new FormGroup(
+          {'name': new FormControl(null),
+            'amount': new FormControl(null)
+          }
+        )])
+    });
   }
 
   cancel(){
@@ -79,17 +79,15 @@ export class RecipesEditComponent implements OnInit {
       this.errorsOnForm = true;
       return;
     }
-    //TODO: make a seperate way to just update for changes and stuff like that
+
     this.errorsOnForm = false;
-    this.recipe.name = this.checkForChange('name');
-    this.recipe.imagePath = this.checkForChange('imagePath');
-    this.recipe.description = this.checkForChange('description');
-    this.recipe.ingredients = this.checkForChange('ingredients');
+    this.recipe.name = this.setIfExists('name');
+    this.recipe.imagePath = this.setIfExists('imagePath');
+    this.recipe.description = this.setIfExists('description');
+    this.recipe.ingredients = this.setIfExists('ingredients');
     console.log('Recipe Data to push:', this.recipe);
     console.log('Data Raw:', this.recipeForm);
     if(!this.editMode) {
-      // master overwrite for id. This prevents shallow copy entries for new entries
-      // this.recipe.id = this.recipeService.newRecipeId();
       this.recipeService.addRecipeToList(this.recipe);
     }else{
       this.recipeService.updateRecipeInList(this.id, this.recipe);
@@ -97,7 +95,8 @@ export class RecipesEditComponent implements OnInit {
 
   }
 
-  checkForChange(someProp){
+  // this is tricky, but it doesn't seem to be adding complexity to understand if named correctly
+  setIfExists(someProp){
     return (this.recipeForm.value[someProp] ? this.recipeForm.value[someProp] : this.recipe[someProp]);
   }
 
