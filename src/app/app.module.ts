@@ -22,6 +22,7 @@ import { SignupComponent } from './auth/signup/signup.component';
 import { SigninComponent } from './auth/signin/signin.component';
 import { AuthService } from './auth/auth.service';
 import { CaptializePipe } from './shared/captialize.pipe';
+import { AuthGuard } from './auth/auth-gaurd.service';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,7 @@ import { CaptializePipe } from './shared/captialize.pipe';
     ReactiveFormsModule,
     HttpModule
   ],
-  providers: [ShoppingListService, RecipeService, DatabaseService, AuthService],
+  providers: [ShoppingListService, RecipeService, DatabaseService, AuthService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

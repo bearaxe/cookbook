@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import * as firebase from 'firebase';
-import { DatabaseService } from './shared/database.service';
 
 @Component({
   selector: 'app-root',
