@@ -20,6 +20,8 @@ import { DatabaseService } from './shared/database.service';
 import { HttpModule } from '@angular/http';
 import { SignupComponent } from './auth/signup/signup.component';
 import { SigninComponent } from './auth/signin/signin.component';
+import { AuthService } from './auth/auth.service';
+import { CaptializePipe } from './shared/captialize.pipe';
 
 @NgModule({
   declarations: [
@@ -36,6 +38,7 @@ import { SigninComponent } from './auth/signin/signin.component';
     RecipesEditComponent,
     SignupComponent,
     SigninComponent,
+    CaptializePipe,
   ],
   imports: [
     BrowserModule,
@@ -44,7 +47,7 @@ import { SigninComponent } from './auth/signin/signin.component';
     ReactiveFormsModule,
     HttpModule
   ],
-  providers: [ShoppingListService, RecipeService, DatabaseService],
+  providers: [ShoppingListService, RecipeService, DatabaseService, AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

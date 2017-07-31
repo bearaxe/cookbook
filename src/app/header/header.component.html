@@ -10,13 +10,16 @@
                 <li routerLinkActive="active"><a routerLink="shopping-list">Shopping List</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li class="dropdown" appDropdown>
-                    <a style="cursor:pointer;" class="dropdown-toggle" role="button">Manage <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a style="cursor:pointer;" (click)="onSave()">Save Data</a></li>
-                        <li><a style="cursor:pointer;" (click)="onFetch()">Fetch Data</a></li>
-                    </ul>
-                </li>
+              <li *ngIf="user===''"><a routerLink="/signup">Register</a></li>
+              <li *ngIf="user===''"><a routerLink="/signin">Sign In</a></li>
+              <li *ngIf="user!==''"><a routerLink="/recipes"> Welcome, {{ user | captialize }}</a></li>
+              <li class="dropdown" appDropdown>
+                  <a style="cursor:pointer;" class="dropdown-toggle" role="button">Manage <span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                      <li><a style="cursor:pointer;" (click)="onSave()">Save Data</a></li>
+                      <li><a style="cursor:pointer;" (click)="onFetch()">Fetch Data</a></li>
+                  </ul>
+              </li>
             </ul>
         </div>
     </div>

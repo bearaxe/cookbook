@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DatabaseService } from '../shared/database.service';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -10,9 +11,18 @@ import { DatabaseService } from '../shared/database.service';
 export class HeaderComponent implements OnInit {
 
   constructor(private router: Router,
-              private db: DatabaseService) { }
+              private db: DatabaseService,
+              private auth: AuthService) { }
+
+  user = '';
 
   ngOnInit() {
+    this.auth.loggedInUser.subscribe(
+      (loggedInUser) => {
+        this.user = loggedInUser;
+        console.log('updated user to:', this.user);
+      }
+    );
   }
 
   onSave(){
