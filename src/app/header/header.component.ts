@@ -12,12 +12,12 @@ export class HeaderComponent implements OnInit {
 
   constructor(private router: Router,
               private db: DatabaseService,
-              private auth: AuthService) { }
+              private authService: AuthService) { }
 
   user = '';
 
   ngOnInit() {
-    this.auth.loggedInUser.subscribe(
+    this.authService.loggedInUser.subscribe(
       (loggedInUser) => {
         this.user = loggedInUser;
         console.log('updated user to:', this.user);
@@ -37,5 +37,9 @@ export class HeaderComponent implements OnInit {
       (response) => console.log(response),
       (error) => console.log(error)
     );
+  }
+
+  onLogout(){
+    this.authService.logout();
   }
 }
