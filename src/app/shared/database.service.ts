@@ -18,11 +18,21 @@ export class DatabaseService {
       (response: Response) => {
         const data = response.json();
         console.log('response:', data);
-        this.recipeService.setList(data['recipes']);
+        this.handleRecipes(data['recipes']);
         this.slService.setList(data['shoppingList']);
         return true;
       }
     );
+  }
+
+  handleRecipes(recipes){
+    // checking data to make sure they all contain Recipe structured data
+    for (let recipe of recipes) {
+      if (!recipe['ingredients']) {
+        recipe['ingredients'] = [];
+      }
+    }
+    this.recipeService.setList(recipes);
   }
 
   saveData(){
