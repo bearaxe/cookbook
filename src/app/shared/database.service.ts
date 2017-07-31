@@ -25,7 +25,8 @@ export class DatabaseService {
         this.handleRecipes(data['recipes']);
         this.slService.setList(data['shoppingList']);
         return true;
-      }
+      },
+      (error) => console.log(error)
     );
   }
 
