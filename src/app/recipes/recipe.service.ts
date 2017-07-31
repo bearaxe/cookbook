@@ -63,4 +63,10 @@ export class RecipeService{
       this.recipes.splice(index, 1);
       this.updatedRecipeList.next(this.recipes);
     }
+
+    setList(list){
+      this.recipes = list;
+      console.log('compare and check:', this.recipes, '\n', list);
+      this.updatedRecipeList.next(this.recipes);
+    }
 }

@@ -54,4 +54,10 @@ export class ShoppingListService{
       this.ingredients[index] = newIngredient;
       this.updatedIngredientList.next(this.ingredients.slice());
     }
+
+    setList(list){
+      this.ingredients = list;
+      console.log('updated shopping list to most recent save!');
+      this.updatedIngredientList.next(this.ingredients.slice());
+    }
 }
