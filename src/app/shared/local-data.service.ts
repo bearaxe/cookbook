@@ -6,8 +6,6 @@
 //   that data
 import { Injectable } from '@angular/core';
 import { DatabaseService } from './database.service';
-import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
 import { Subject } from 'rxjs/Subject';
 
 @Injectable()
@@ -16,18 +14,16 @@ export class LocalDataService {
   userSubj = new Subject<string>();
   token: string;
   user: string;
-  tokSub = new Subscription();
-  useSub = new Subscription();
 
   constructor(private db: DatabaseService){
-    this.tokSub = this.tokenSubj.subscribe(
+    this.tokenSubj.subscribe(
       (token: string) => {
         this.token = token;
         this.store('token', token);
       }
     );
 
-    this.useSub = this.userSubj.subscribe(
+    this.userSubj.subscribe(
       (user: string) => {
         this.user = user;
         this.store('user', user);
@@ -39,10 +35,13 @@ export class LocalDataService {
 
   // if you get null for user or token, you should make them log in again, not show them the logged in stuff lol
   findSession(){
-    let tempTok = this.get('token');
-    let tempUse = this.get('user');
+    const tempTok = this.get('token');
+    const tempUse = this.get('user');
     // null values are strings in localStorage, so that's what I'm checking here
-    if(tempTok !== 'null' && tempUse !== 'null') {
+    // except when they're not stored as null, then they're initialized as typeof Object nulls (not typeof strings)
+    // for the record, these will show as undefined with this check in, otherwise true null without string check
+    if(tempTok !== 'null' && typeof tempTok === 'string'
+        && tempUse !== 'null' && typeof tempUse === 'string') {
       this.tokenSubj.next(this.get('token'));
       this.userSubj.next(this.get('user'));
       this.fetchData();

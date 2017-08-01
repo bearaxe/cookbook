@@ -16,6 +16,7 @@ export class AuthService{
         firebase.auth().currentUser.getToken()
           .then(
             (token: string) => {
+              console.log('trails 1.1');
               this.onAuthSuccess(token, email);
             }
           );
@@ -31,6 +32,7 @@ export class AuthService{
         firebase.auth().currentUser.getToken()
           .then(
             (token: string) => {
+              console.log('trails 1.2');
               this.onAuthSuccess(token, email);
             }
 
@@ -41,6 +43,7 @@ export class AuthService{
       );
   }
   onAuthSuccess(token: string, email: string){
+    console.log('trails 1');
     this.localDS.tokenSubj.next(token);
     this.localDS.userSubj.next(email.split('@')[0]);
     this.localDS.fetchData();
