@@ -1,24 +1,10 @@
 import * as firebase from 'firebase';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs/Subject';
-import { DatabaseService } from '../shared/database.service';
-import { Observable } from 'rxjs/Observable';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { LocalDataService } from '../shared/local-data.service';
 
 @Injectable()
 export class AuthService{
-  // why are we using a subject here? Can't we just update it once?
-  // I need to figure out how to set the initial value of a Subject
-  // try out BehaviorSubject
-
-  // loggedInUser= ( window.localStorage.getItem('cookbook-user')
-  //                     ? new BehaviorSubject<string>(window.localStorage.getItem('cookbook-user'))
-  //                     : new Subject<string>());
-  loggedInUser = new Subject<string>();
-  // token: string = window.localStorage.getItem('cookbook-tk') || null;
-  token: string;
   // HEADS UP: You cannot run db commands in this service. That would cause a circular dependency
   constructor(private router: Router,
               private route: ActivatedRoute,
@@ -73,10 +59,10 @@ export class AuthService{
   // try to use this to refresh the token (but there should probably be time limits, etc)
   getToken() {
     firebase.auth().currentUser.getToken().then(
-      (token: string) => this.token = token
+      (token: string) => this.localDS.tokenSubj.next(token)
     );
     // this may not refresh the token and just be unavailable. It would need error checking.
-    return this.token;
+    return this.localDS.token;
   }
 
   // This i don't know if it should go into the LocDS
