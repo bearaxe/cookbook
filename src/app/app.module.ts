@@ -24,6 +24,7 @@ import { AuthService } from './auth/auth.service';
 import { CaptializePipe } from './shared/captialize.pipe';
 import { AuthGuard } from './auth/auth-gaurd.service';
 import { LocalDataService } from './shared/local-data.service';
+import { AboutComponent } from './about/about/about.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { LocalDataService } from './shared/local-data.service';
     SignupComponent,
     SigninComponent,
     CaptializePipe,
+    AboutComponent,
   ],
   imports: [
     BrowserModule,

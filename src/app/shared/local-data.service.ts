@@ -42,11 +42,11 @@ export class LocalDataService {
     // for the record, these will show as undefined with this check in, otherwise true null without string check
     if(tempTok !== 'null' && typeof tempTok === 'string'
         && tempUse !== 'null' && typeof tempUse === 'string') {
-      this.tokenSubj.next(this.get('token'));
-      this.userSubj.next(this.get('user'));
+      this.tokenSubj.next(tempTok);
+      this.userSubj.next(tempUse);
       this.fetchData();
     }
-    console.log('my info!\ntoken:', this.token, '\nuser:', this.user);
+    // console.log('my info!\ntoken:', this.token, '\nuser:', this.user);
   }
 
   store(key: string, value: string){

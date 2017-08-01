@@ -50,7 +50,7 @@ export class RecipeService{
 
     addRecipeToList(newRecipe: Recipe){
       this.recipes.push(newRecipe);
-      console.log('In case I need to implement a subscription, this is the new array value: ', this.recipes);
+      // console.log('In case I need to implement a subscription, this is the new array value: ', this.recipes);
       this.updatedRecipeList.next(this.recipes);
     }
 
@@ -66,7 +66,7 @@ export class RecipeService{
 
     setList(list){
       this.recipes = list;
-      console.log('compare and check:', this.recipes, '\n', list);
+      // console.log('compare and check:', this.recipes, '\n', list);
       this.updatedRecipeList.next(this.recipes);
     }
 }
