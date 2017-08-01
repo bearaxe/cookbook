@@ -24,6 +24,7 @@ export class DatabaseService {
         const data = response.json();
         console.log('response:', data);
         this.handleRecipes(data['recipes']);
+        // TODO: if this is empty what happens???
         this.slService.setList(data['shoppingList']);
         return true;
       },

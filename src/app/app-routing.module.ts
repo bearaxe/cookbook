@@ -24,10 +24,12 @@ const appRoutes: Routes = [
   {path: 'signup', component: SignupComponent},
   {path: 'signin', component: SigninComponent},
   {path: 'about', component: AboutComponent},
+  // I don't know why I can't use children here correctly :/
   {path: 'profile', component: ProfileComponent, children: [
-    {path: '', component: ProfileComponent, pathMatch: 'full'},
-    {path: 'edit', component: ProfileEditComponent, pathMatch: 'full'},
+    // {path: '', component: ProfileComponent, pathMatch: 'full'},
+    // {path: 'edit', component: ProfileEditComponent}
   ]},
+  {path: 'profile/edit', component: ProfileEditComponent},
 
   // {path: '**', redirectTo: '/recipes'}
 ];

@@ -40,12 +40,9 @@ export class RecipeService{
     }
 
     updateRecipeInList(index: number, updatedRecipe: Recipe){
-        // let tochange = this.getRecipe(index);
-        // tochange = updatedRecipe;
         this.recipes[index] = updatedRecipe;
-        // why don't I need to push updatedRecpiesList.next here??
         this.updatedRecipeList.next(this.recipes);
-        console.log('This should update :(', this.recipes)
+        console.log('This should update :', this.recipes);
     }
 
     addRecipeToList(newRecipe: Recipe){

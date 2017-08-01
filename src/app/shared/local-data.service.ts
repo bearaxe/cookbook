@@ -87,7 +87,8 @@ export class LocalDataService {
         this.deleteSession();
         break;
       default:
-        console.log('This error is unhandled. Please implement a handler for errorCode ' + error.statusCode + ':' +  error.json().error + ' in localDataService');
+        console.log('This error is unhandled. Please implement a handler for errorCode '
+                    + error.statusCode + ':' +  error.json().error + ' in localDataService');
         alert('Something went very wrong. Please reload and try again.\nSorry :(');
     }
   }
