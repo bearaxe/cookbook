@@ -25,6 +25,8 @@ import { CaptializePipe } from './shared/captialize.pipe';
 import { AuthGuard } from './auth/auth-gaurd.service';
 import { LocalDataService } from './shared/local-data.service';
 import { AboutComponent } from './about/about/about.component';
+import { ProfileComponent } from './profile/profile.component';
+import { ProfileEditComponent } from './profile/profile-edit/profile-edit.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +45,8 @@ import { AboutComponent } from './about/about/about.component';
     SigninComponent,
     CaptializePipe,
     AboutComponent,
+    ProfileComponent,
+    ProfileEditComponent,
   ],
   imports: [
     BrowserModule,

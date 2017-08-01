@@ -71,7 +71,34 @@ export class LocalDataService {
   fetchData(){
     this.db.fetchData(this.token).subscribe(
       (response) => console.log('Silent data fetch successful.\nData on site should now match Firebase.'),
-      (error) => console.log('Silent data fetcH FAILED:', error)
+      (error) => {
+        console.log('Silent data fetcH FAILED:', error);
+        this.errorHandler(error);
+      }
     );
+  }
+
+  errorHandler(error){
+    switch(error.status){
+      case 401:
+        // implement a model instead of an alert box for every alert box.
+        // Also, let people wait and not delete session if there's something they want to save
+        alert('Session appears to have expired.\nPlease log back in to continue.');
+        this.deleteSession();
+        break;
+      default:
+        console.log('This error is unhandled. Please implement a handler for errorCode ' + error.statusCode + ':' +  error.json().error + ' in localDataService');
+        alert('Something went very wrong. Please reload and try again.\nSorry :(');
+    }
+  }
+
+  deleteSession(){
+    this.tokenSubj.next(null);
+    this.userSubj.next(null);
+  }
+
+  // alias to database function
+  fetchDataObservable(){
+    return this.db.fetchData(this.token);
   }
 }

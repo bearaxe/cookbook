@@ -44,7 +44,9 @@ export class DatabaseService {
   saveData(token: string){
     // const token = this.authService.token;
     console.log('Sending step!\nData being sent:', this.sessionInfo());
-    return this.http.put('https://ng-cookbook-dd5be.firebaseio.com/library.json?auth=' + token, this.sessionInfo());
+    return this.http.put('https://ng-cookbook-dd5be.firebaseio.com/library.json?auth=' + token, this.sessionInfo()).map(
+      (error) => console.log(error)
+    );
   }
 
   sessionInfo(){

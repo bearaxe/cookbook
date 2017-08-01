@@ -35,7 +35,6 @@ export class AuthService{
               console.log('trails 1.2');
               this.onAuthSuccess(token, email);
             }
-
           );
       })
       .catch(
@@ -53,8 +52,7 @@ export class AuthService{
   logout(){
     firebase.auth().signOut();
     // clean out localDS data (shouldn't this go in a clearData function in localDS?)
-    this.localDS.tokenSubj.next(null);
-    this.localDS.userSubj.next(null);
+    this.localDS.deleteSession();
   }
 
   // this returns a Promise

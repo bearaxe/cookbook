@@ -9,6 +9,8 @@ import { SignupComponent } from './auth/signup/signup.component';
 import { SigninComponent } from './auth/signin/signin.component';
 import { AuthGuard } from './auth/auth-gaurd.service';
 import { AboutComponent } from './about/about/about.component';
+import { ProfileComponent } from './profile/profile.component';
+import { ProfileEditComponent } from './profile/profile-edit/profile-edit.component';
 
 const appRoutes: Routes = [
   {path: '', redirectTo: '/recipes', pathMatch: 'full'},
@@ -22,6 +24,11 @@ const appRoutes: Routes = [
   {path: 'signup', component: SignupComponent},
   {path: 'signin', component: SigninComponent},
   {path: 'about', component: AboutComponent},
+  {path: 'profile', component: ProfileComponent, children: [
+    {path: '', component: ProfileComponent, pathMatch: 'full'},
+    {path: 'edit', component: ProfileEditComponent, pathMatch: 'full'},
+  ]},
+
   // {path: '**', redirectTo: '/recipes'}
 ];
 
