@@ -12,8 +12,7 @@ import { LocalDataService } from '../shared/local-data.service';
 export class HeaderComponent implements OnInit {
   // authService is used in the template, hence it's publicly accessible here
   // this is done according to research on what the correct way to access constructor arguments from the template
-  constructor(private router: Router,
-              private localDS: LocalDataService,
+  constructor(private localDS: LocalDataService,
               public authService: AuthService) { }
 
   user = 'failedToGetUser';
