@@ -7,6 +7,7 @@
 import { Injectable } from '@angular/core';
 import { DatabaseService } from './database.service';
 import { Subject } from 'rxjs/Subject';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Injectable()
 export class LocalDataService {
@@ -15,7 +16,8 @@ export class LocalDataService {
   token: string;
   user: string;
 
-  constructor(private db: DatabaseService){
+  constructor(private db: DatabaseService,
+              private router: Router){
     this.tokenSubj.subscribe(
       (token: string) => {
         this.token = token;
@@ -96,6 +98,7 @@ export class LocalDataService {
   deleteSession(){
     this.tokenSubj.next(null);
     this.userSubj.next(null);
+    this.router.navigate(['/']);
   }
 
   // alias to database function

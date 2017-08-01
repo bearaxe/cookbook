@@ -51,7 +51,6 @@ export class AuthService{
 
   logout(){
     firebase.auth().signOut();
-    // clean out localDS data (shouldn't this go in a clearData function in localDS?)
     this.localDS.deleteSession();
   }
 
