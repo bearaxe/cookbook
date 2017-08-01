@@ -12,10 +12,11 @@ export class DatabaseService {
   constructor(private http: Http,
               private recipeService: RecipeService,
               private slService: ShoppingListService,
-              private authService: AuthService) { }
+              // private authService: AuthService,
+              ) { }
 
-  fetchData(){
-    const token = this.authService.getToken();
+  fetchData(token: string){
+    // const token = this.authService.getToken();
 
     console.log('Fetching data!');
     return this.http.get('https://ng-cookbook-dd5be.firebaseio.com/library.json?auth=' + token).map(
@@ -40,8 +41,8 @@ export class DatabaseService {
     this.recipeService.setList(recipes);
   }
 
-  saveData(){
-    const token = this.authService.token;
+  saveData(token: string){
+    // const token = this.authService.token;
     console.log('Sending step!\nData being sent:', this.sessionInfo());
     return this.http.put('https://ng-cookbook-dd5be.firebaseio.com/library.json?auth=' + token, this.sessionInfo());
   }

@@ -23,6 +23,7 @@ import { SigninComponent } from './auth/signin/signin.component';
 import { AuthService } from './auth/auth.service';
 import { CaptializePipe } from './shared/captialize.pipe';
 import { AuthGuard } from './auth/auth-gaurd.service';
+import { LocalDataService } from './shared/local-data.service';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,7 @@ import { AuthGuard } from './auth/auth-gaurd.service';
     ReactiveFormsModule,
     HttpModule
   ],
-  providers: [ShoppingListService, RecipeService, DatabaseService, AuthService, AuthGuard],
+  providers: [ShoppingListService, RecipeService, DatabaseService, AuthService, AuthGuard, LocalDataService,],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
