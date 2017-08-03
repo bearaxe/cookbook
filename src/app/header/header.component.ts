@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { DatabaseService } from '../shared/database.service';
 import { AuthService } from '../auth/auth.service';
 import { LocalDataService } from '../shared/local-data.service';
 

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../auth.service';
 import { NgForm } from '@angular/forms';
+import { AuthService } from '../auth.service';
 import { DatabaseService } from '../../shared/database.service';
 
 @Component({

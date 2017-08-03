@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
-import { Ingredient } from '../../shared/ingredient.model';
-import { ShoppingListService } from '../shopping-list.service';
 import { NgForm } from '@angular/forms';
 import { Subscription } from 'rxjs/Subscription';
+import { Ingredient } from '../../shared/ingredient.model';
+import { ShoppingListService } from '../shopping-list.service';
 import { AuthService } from '../../auth/auth.service';
 
 @Component({
@@ -19,7 +19,7 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
   editedItem: Ingredient;
 
   constructor(private slService: ShoppingListService,
-              private authService: AuthService) { }
+              public authService: AuthService) { }
 
   ngOnInit() {
     this.subscription = this.slService.startedEditing
