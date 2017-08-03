@@ -2,7 +2,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
-import { DropdownDirective } from './shared/dropdown.directive';
 import { HeaderComponent } from './header/header.component';
 import { RecipesComponent } from './recipes/recipes.component';
 import { RecipesListComponent } from './recipes/recipes-list/recipes-list.component';
@@ -21,17 +20,16 @@ import { HttpModule } from '@angular/http';
 import { SignupComponent } from './auth/signup/signup.component';
 import { SigninComponent } from './auth/signin/signin.component';
 import { AuthService } from './auth/auth.service';
-import { CapitalizePipe } from './shared/captialize.pipe';
 import { AuthGuard } from './auth/auth-gaurd.service';
 import { LocalDataService } from './shared/local-data.service';
 import { AboutComponent } from './about/about.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ProfileEditComponent } from './profile/profile-edit/profile-edit.component';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    DropdownDirective,
     HeaderComponent,
     RecipesComponent,
     RecipesListComponent,
@@ -43,7 +41,6 @@ import { ProfileEditComponent } from './profile/profile-edit/profile-edit.compon
     RecipesEditComponent,
     SignupComponent,
     SigninComponent,
-    CapitalizePipe,
     AboutComponent,
     ProfileComponent,
     ProfileEditComponent,
@@ -53,9 +50,17 @@ import { ProfileEditComponent } from './profile/profile-edit/profile-edit.compon
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpModule
+    HttpModule,
+    SharedModule
   ],
-  providers: [ShoppingListService, RecipeService, DatabaseService, AuthService, AuthGuard, LocalDataService,],
+  providers: [
+    ShoppingListService,
+    RecipeService,
+    DatabaseService,
+    AuthService,
+    AuthGuard,
+    LocalDataService,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
