@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { RecipesComponent } from './recipes.component';
 import { RecipesStartComponent } from './recipes-start/recipes-start.component';
 import { RecipesListComponent } from './recipes-list/recipes-list.component';
@@ -19,7 +18,6 @@ import { SharedModule } from '../shared/shared.module';
     RecipesDetailComponent,
   ],
   imports: [
-    CommonModule,
     RecipesRoutingModule,
     SharedModule
   ]

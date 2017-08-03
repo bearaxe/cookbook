@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CapitalizePipe } from './captialize.pipe';
 import { DropdownDirective } from './dropdown.directive';
 import { ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 
 @NgModule({
@@ -10,6 +11,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     DropdownDirective,
   ],
   exports: [
+    CommonModule,
     CapitalizePipe,
     DropdownDirective,
     ReactiveFormsModule
