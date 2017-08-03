@@ -22,8 +22,8 @@ import { SharedModule } from './shared/shared.module';
     AppComponent,
     HeaderComponent,
     AboutComponent,
-    ProfileComponent,
-    ProfileEditComponent,
+    // ProfileComponent,
+    // ProfileEditComponent,
   ],
   imports: [
     BrowserModule,
