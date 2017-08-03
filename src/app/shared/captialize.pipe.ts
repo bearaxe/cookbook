@@ -1,9 +1,9 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'captialize'
+  name: 'capitalize'
 })
-export class CaptializePipe implements PipeTransform {
+export class CapitalizePipe implements PipeTransform {
 
   transform(value: string): any {
     const temp = value.split('');

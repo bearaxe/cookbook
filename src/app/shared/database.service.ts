@@ -3,21 +3,15 @@ import { Http, Response } from '@angular/http';
 import { RecipeService } from '../recipes/recipe.service';
 import { ShoppingListService } from '../shopping-list/shopping-list.service';
 import 'rxjs/Rx';
-import { AuthService } from '../auth/auth.service';
-// import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class DatabaseService {
 
   constructor(private http: Http,
               private recipeService: RecipeService,
-              private slService: ShoppingListService,
-              // private authService: AuthService,
-              ) { }
+              private slService: ShoppingListService) { }
 
-  fetchData(token: string){
-    // const token = this.authService.getToken();
-
+  fetchData(token: string) {
     console.log('Fetching data!');
     return this.http.get('https://ng-cookbook-dd5be.firebaseio.com/library.json?auth=' + token).map(
       (response: Response) => {
@@ -32,9 +26,9 @@ export class DatabaseService {
     );
   }
 
-  handleRecipes(recipes){
+  handleRecipes(recipes) {
     // checking data to make sure they all contain Recipe structured data
-    for (let recipe of recipes) {
+    for (const recipe of recipes){
       if (!recipe['ingredients']) {
         recipe['ingredients'] = [];
       }
@@ -42,15 +36,14 @@ export class DatabaseService {
     this.recipeService.setList(recipes);
   }
 
-  saveData(token: string){
-    // const token = this.authService.token;
+  saveData(token: string) {
     console.log('Sending step!\nData being sent:', this.sessionInfo());
     return this.http.put('https://ng-cookbook-dd5be.firebaseio.com/library.json?auth=' + token, this.sessionInfo()).map(
       (error) => console.log(error)
     );
   }
 
-  sessionInfo(){
+  sessionInfo() {
     return {'recipes': this.recipeService.getRecipes(), 'shoppingList': this.slService.getIngredients()};
   }
 
