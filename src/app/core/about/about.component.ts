@@ -8,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 export class AboutComponent implements OnInit {
 
   todo= [
-    'Make a profile page',
+    '√ Make a profile page',
     'Add profile data to firebase',
     'Add which profile submitted a recipe to recipe detail',
     'Add private/public field to recipe detail',
