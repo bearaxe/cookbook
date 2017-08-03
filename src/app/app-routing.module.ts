@@ -1,8 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ShoppingListComponent } from './shopping-list/shopping-list.component';
-import { SignupComponent } from './auth/signup/signup.component';
-import { SigninComponent } from './auth/signin/signin.component';
 import { AboutComponent } from './about/about.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ProfileEditComponent } from './profile/profile-edit/profile-edit.component';
@@ -19,8 +16,8 @@ const appRoutes: Routes = [
   // ]},
   // {path: 'shopping-list', component: ShoppingListComponent},
   {path: 'shopping-list', loadChildren: './shopping-list/shopping-list.module#ShoppingListModule'},
-  {path: 'signup', component: SignupComponent},
-  {path: 'signin', component: SigninComponent},
+  {path: 'auth', loadChildren: './auth/auth.module#AuthModule'},
+
   {path: 'about', component: AboutComponent},
   // I don't know why I can't use children here correctly :/
   {path: 'profile', component: ProfileComponent, children: [

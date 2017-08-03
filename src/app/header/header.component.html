@@ -11,8 +11,8 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
               <ng-template [ngIf]="!isAuthenticated()">
-                <li><a routerLink="/signup">Register</a></li>
-                <li><a routerLink="/signin">Sign In</a></li>
+                <li><a routerLink="/auth/signup">Register</a></li>
+                <li><a routerLink="/auth/signin">Sign In</a></li>
               </ng-template>
               <ng-template [ngIf]="isAuthenticated()">
               <li><a routerLink="/profile"> Welcome, {{ user | capitalize }}</a></li>
