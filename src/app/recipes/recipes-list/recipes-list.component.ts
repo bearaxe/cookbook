@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import { Recipe } from '../recipe.model';
 import { RecipeService } from '../recipe.service';
-import { AuthService } from '../../auth/auth.service';
+import { LocalDataService } from '../../shared/local-data.service';
 
 @Component({
   selector: 'app-recipes-list',
@@ -15,15 +15,19 @@ export class RecipesListComponent implements OnInit, OnDestroy {
   index: number;
 
   constructor(private recipeService: RecipeService,
-              public authService: AuthService) { }
+              private localDS: LocalDataService) { }
 
   ngOnInit() {
       this.recipes = this.recipeService.getRecipes();
       this.subscription = this.recipeService.updatedRecipeList.subscribe(
         (newRecipeList) => {
-            console.log("found an update!");
+            console.log('found an update!');
             this.recipes = newRecipeList;
         });
+  }
+
+  isAuthenticated() {
+    return this.localDS.isAuthenticated();
   }
 
   ngOnDestroy() {

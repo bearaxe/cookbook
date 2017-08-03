@@ -23,7 +23,7 @@ const appRoutes: Routes = [
   {path: 'shopping-list', component: ShoppingListComponent},
   {path: 'signup', component: SignupComponent},
   {path: 'signin', component: SigninComponent},
-  {path: 'aboutOld', component: AboutComponent},
+  {path: 'about', component: AboutComponent},
   // I don't know why I can't use children here correctly :/
   {path: 'profile', component: ProfileComponent, children: [
     // {path: '', component: ProfileComponent, pathMatch: 'full'},

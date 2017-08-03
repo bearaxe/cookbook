@@ -1,5 +1,5 @@
 <h2>Select a recipe from the list</h2>
-<ng-template [ngIf]="authService.isAuthenticated()">
+<ng-template [ngIf]="isAuthenticated()">
   <h3>OR</h3>
   <h2>Start a new recipe!</h2>
   <button class="btn btn-success" routerLink="new">New Recipe</button>

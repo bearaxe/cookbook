@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../auth/auth.service';
 import { LocalDataService } from '../shared/local-data.service';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -8,15 +8,13 @@ import { LocalDataService } from '../shared/local-data.service';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  // authService is used in the template, hence it's publicly accessible here
-  // this is done according to research on what the correct way to access constructor arguments from the template
+  // neither service is used directly in the template anymore, so now they're both private
   constructor(private localDS: LocalDataService,
-              public authService: AuthService) { }
+              private authService: AuthService) { }
 
   user = 'failedToGetUser';
 
   ngOnInit() {
-    // this DOES run.
     // Subscribe only nexts on sign in/up but you need this here to update username on logout -> login
     this.localDS.userSubj.subscribe(
       (user: string) => {
@@ -28,7 +26,7 @@ export class HeaderComponent implements OnInit {
     this.user = this.localDS.user;
   }
 
-  onSave(){
+  onSave() {
     this.localDS.saveData();
     // you will need to implement a saveDataAndRespond function to return the observable if you want response abilities
     //   .subscribe(
@@ -37,7 +35,7 @@ export class HeaderComponent implements OnInit {
     // );
   }
 
-  onFetch(){
+  onFetch() {
     this.localDS.fetchData();
     // again, you'll need a diffent function that actually returns the observable if you want popups on fetch/save
     //   .subscribe(
@@ -46,7 +44,11 @@ export class HeaderComponent implements OnInit {
     // );
   }
 
-  onLogout(){
+  onLogout() {
     this.authService.logout();
+  }
+
+  isAuthenticated() {
+    return this.localDS.isAuthenticated();
   }
 }

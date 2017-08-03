@@ -1,16 +1,13 @@
 import * as firebase from 'firebase';
-import { ActivatedRoute, Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { LocalDataService } from '../shared/local-data.service';
 
 @Injectable()
-export class AuthService{
+export class AuthService {
   // HEADS UP: You cannot run db commands in this service. That would cause a circular dependency
-  constructor(private router: Router,
-              private route: ActivatedRoute,
-              private localDS: LocalDataService) { }
+  constructor(private localDS: LocalDataService) { }
 
-  signupUser(email: string, password: string, cb: any){
+  signupUser(email: string, password: string) {
     firebase.auth().createUserWithEmailAndPassword(email, password)
       .then(response => {
         firebase.auth().currentUser.getToken()
@@ -26,13 +23,12 @@ export class AuthService{
       );
   }
 
-  signinUser(email: string, password: string){
+  signinUser(email: string, password: string) {
     firebase.auth().signInWithEmailAndPassword(email, password)
       .then(response => {
         firebase.auth().currentUser.getToken()
           .then(
             (token: string) => {
-              console.log('trails 1.2');
               this.onAuthSuccess(token, email);
             }
           );
@@ -41,15 +37,14 @@ export class AuthService{
         error => console.log(error)
       );
   }
-  onAuthSuccess(token: string, email: string){
-    console.log('trails 1');
+
+  onAuthSuccess(token: string, email: string) {
     this.localDS.tokenSubj.next(token);
     this.localDS.userSubj.next(email.split('@')[0]);
-    this.localDS.fetchData();
-    this.router.navigate(['/recipes'], {relativeTo: this.route});
+    this.localDS.onAuthSuccess();
   }
 
-  logout(){
+  logout() {
     firebase.auth().signOut();
     this.localDS.deleteSession();
   }

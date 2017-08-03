@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../auth/auth.service';
+import { LocalDataService } from '../../shared/local-data.service';
 
 @Component({
   selector: 'app-recipes-start',
@@ -8,9 +8,13 @@ import { AuthService } from '../../auth/auth.service';
 })
 export class RecipesStartComponent implements OnInit {
 
-  constructor(public authService: AuthService) { }
+  constructor(private localDS: LocalDataService) { }
 
   ngOnInit() {
+  }
+
+  isAuthenticated() {
+    return this.localDS.isAuthenticated();
   }
 
 }

@@ -2,8 +2,8 @@ import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Subscription } from 'rxjs/Subscription';
 import { Ingredient } from '../../shared/ingredient.model';
+import { LocalDataService } from '../../shared/local-data.service';
 import { ShoppingListService } from '../shopping-list.service';
-import { AuthService } from '../../auth/auth.service';
 
 @Component({
   selector: 'app-shopping-edit',
@@ -19,7 +19,7 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
   editedItem: Ingredient;
 
   constructor(private slService: ShoppingListService,
-              public authService: AuthService) { }
+              private localDS: LocalDataService) { }
 
   ngOnInit() {
     this.subscription = this.slService.startedEditing
@@ -55,6 +55,10 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
   clearItem() {
     this.ingredientForm.reset();
     this.editMode = false;
+  }
+
+  isAuthenticated() {
+    return this.localDS.isAuthenticated();
   }
 
   ngOnDestroy() {

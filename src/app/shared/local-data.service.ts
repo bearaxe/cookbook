@@ -94,4 +94,13 @@ export class LocalDataService {
     this.userSubj.next(null);
     this.router.navigate(['/']);
   }
+
+  isAuthenticated() {
+    return this.token != null;
+  }
+
+  onAuthSuccess() {
+    this.fetchData();
+    this.router.navigate(['/recipes']);
+  }
 }
