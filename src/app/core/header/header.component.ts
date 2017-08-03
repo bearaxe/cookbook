@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { LocalDataService } from '../shared/local-data.service';
-import { AuthService } from '../auth/auth.service';
+import { LocalDataService } from '../../shared/local-data.service';
+import { AuthService } from '../../auth/auth.service';
 
 @Component({
   selector: 'app-header',
